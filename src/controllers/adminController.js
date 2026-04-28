@@ -115,4 +115,20 @@ exports.getUsers = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Could not fetch users" });
   }
-};
+};
+
+exports.toggleFlagUser = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    user.isFlagged = !user.isFlagged;
+    await user.save();
+
+    res.json({ message: `User ${user.isFlagged ? 'flagged' : 'unflagged'} successfully`, isFlagged: user.isFlagged });
+  } catch (error) {
+    res.status(500).json({ error: "Could not toggle user flag" });
+  }
+};
+

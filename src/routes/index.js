@@ -49,5 +49,7 @@ router.get("/admin/withdrawals", auth, admin, adminCtrl.getWithdrawals);
 router.get("/admin/users", auth, admin, adminCtrl.getUsers);
 router.post("/admin/withdraw/approve", auth, admin, adminCtrl.approve);
 router.post("/admin/withdraw/reject", auth, admin, adminCtrl.reject);
+router.post("/admin/config/update", auth, admin, configCtrl.updateConfig);
+router.post("/admin/user/toggle-flag", auth, admin, adminCtrl.toggleFlagUser);
 
 module.exports = router;
