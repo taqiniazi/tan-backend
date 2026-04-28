@@ -106,4 +106,13 @@ exports.getAnalytics = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Could not fetch analytics" });
   }
+};
+
+exports.getUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, '-password').sort({ createdAt: -1 });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Could not fetch users" });
+  }
 };

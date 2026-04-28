@@ -46,6 +46,7 @@ router.get("/admin/analytics", auth, admin, adminCtrl.getAnalytics);
 router.get("/admin/queue-status", auth, admin, adminCtrl.getQueueStatus);
 router.get("/admin/referrals", auth, admin, adminCtrl.getReferralInsights);
 router.get("/admin/withdrawals", auth, admin, adminCtrl.getWithdrawals);
+router.get("/admin/users", auth, admin, adminCtrl.getUsers);
 router.post("/admin/withdraw/approve", auth, admin, adminCtrl.approve);
 router.post("/admin/withdraw/reject", auth, admin, adminCtrl.reject);
 
