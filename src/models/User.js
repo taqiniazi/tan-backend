@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   balance: { type: Number, default: 0 },
   baseBalance: { type: Number, default: 0 },
 
-  miningRate: { type: Number, default: 1.0 },
+  miningRate: { type: Number, default: 0.01 },
   lastMiningStartTime: Date,
   isMiningActive: { type: Boolean, default: false },
 
