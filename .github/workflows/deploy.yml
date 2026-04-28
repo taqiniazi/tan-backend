@@ -1,0 +1,39 @@
+name: TAN Network Backend CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run Linting
+      run: npm run lint --if-present
+
+    - name: Build Docker Image
+      run: docker build -t tan-network-backend:${{ github.sha }} .
+
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to Production
+      run: |
+        echo "Adding deployment steps (e.g., Push to ECR/DockerHub or SSH to VPS)"
+        # Example: 
+        # ssh user@host "cd /app && docker-compose pull && docker-compose up -d"

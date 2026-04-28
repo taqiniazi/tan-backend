@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://${MONGO_USER}:${MONGO_PASS}@mongodb:27017/tan_network?authSource=admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=${JWT_SECRET}
+      - BSCSCAN_API_KEY=${BSCSCAN_API_KEY}
+      - ETHERSCAN_API_KEY=${ETHERSCAN_API_KEY}
+      - SOL_RPC_URL=${SOL_RPC_URL}
+      - PAYMENT_ADDRESS_EVM=${PAYMENT_ADDRESS_EVM}
+      - PAYMENT_ADDRESS_SOL=${PAYMENT_ADDRESS_SOL}
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - tan-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+    networks:
+      - tan-network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - tan-network
+
+networks:
+  tan-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  redis_data:
