@@ -71,7 +71,7 @@ exports.verifyPayment = async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       $set: {
         isPremium: true,
-        miningRate: 0.1, // Upgraded rate
+        miningRate: 10.0, // Upgraded rate (10X of 1.0)
         premiumExpiry: oneYearFromNow
       }
     });
