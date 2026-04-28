@@ -6,6 +6,14 @@ exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
+    
+    // Auto-generate referral code for legacy users if missing
+    if (!user.referralCode) {
+      const { v4: uuidv4 } = require("uuid");
+      user.referralCode = uuidv4().slice(0, 6);
+      await user.save();
+    }
+    
     res.json(user);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch profile" });
