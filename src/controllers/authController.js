@@ -38,7 +38,13 @@ exports.signup = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role
+      role: user.role,
+      referralCode: user.referralCode,
+      miningRate: user.miningRate,
+      isPremium: user.isPremium,
+      country: user.country,
+      city: user.city,
+      profileImage: user.profileImage
     }
   });
 };
@@ -72,7 +78,13 @@ exports.login = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      role: user.role
+      role: user.role,
+      referralCode: user.referralCode,
+      miningRate: user.miningRate,
+      isPremium: user.isPremium,
+      country: user.country,
+      city: user.city,
+      profileImage: user.profileImage
     }
   });
 };
