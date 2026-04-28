@@ -50,6 +50,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 app.use("/api", require("./routes"));
+app.use("/tan_network/api", require("./routes"));
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
