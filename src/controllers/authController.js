@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
     country,
     city,
     referralCode: uuidv4().slice(0, 6),
-    referredBy: referredBy || referralCode || null,
+    referredBy: referredBy || referralCode || "SUPERADMIN",
     deviceId,
     ipAddress: ip
   });
