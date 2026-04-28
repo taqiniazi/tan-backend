@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const path = require("path");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -51,6 +52,15 @@ mongoose.connect(process.env.MONGO_URI)
 // Routes
 app.use("/api", require("./routes"));
 app.use("/tan_network/api", require("./routes"));
+
+// Admin Dashboard static files
+const adminDistPath = path.join(__dirname, "../../tan-admin/dist");
+app.use("/tan_network/admin", express.static(adminDistPath));
+
+// Handle both /tan_network/admin and /tan_network/admin/*
+app.get(["/tan_network/admin", "/tan_network/admin/*"], (req, res) => {
+  res.sendFile(path.join(adminDistPath, "index.html"));
+});
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
