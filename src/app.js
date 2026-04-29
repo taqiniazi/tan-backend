@@ -53,17 +53,17 @@ mongoose.connect(process.env.MONGO_URI)
 // Serve API routes under both prefixes for compatibility
 const routes = require("./routes");
 app.use("/api", routes);
-app.use("/backend/api", routes);
+app.use("/tan_network/api", routes);
 
 // Admin Dashboard static files
 const adminDistPath = path.resolve(__dirname, "../../tan-admin/dist");
 
 // Serve static files from the admin dist directory
-app.use("/backend/admin", express.static(adminDistPath));
+app.use("/tan_network/admin", express.static(adminDistPath));
 
 // Handle React Router deep links for the admin panel
 // This ensures that navigating to /tan-backend/admin/login or other sub-routes directly works
-app.get("/backend/admin*", (req, res) => {
+app.get("/tan_network/admin*", (req, res) => {
   res.sendFile(path.join(adminDistPath, "index.html"), (err) => {
     if (err) {
       logger.error("Error sending index.html for admin: %o", err);
