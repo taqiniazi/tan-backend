@@ -50,16 +50,26 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => logger.error("MongoDB Connection Error: %o", err));
 
 // Routes
-app.use("/api", require("./routes"));
-app.use("/tan-backend/api", require("./routes"));
+// Serve API routes under both prefixes for compatibility
+const routes = require("./routes");
+app.use("/api", routes);
+app.use("/tan-backend/api", routes);
 
 // Admin Dashboard static files
-const adminDistPath = path.join(__dirname, "../../tan-admin/dist");
+const adminDistPath = path.resolve(__dirname, "../../tan-admin/dist");
+
+// Serve static files from the admin dist directory
 app.use("/tan-backend/admin", express.static(adminDistPath));
 
-// Handle both /tan-backend/admin and /tan-backend/admin/*
-app.get(["/tan-backend/admin", "/tan-backend/admin/*"], (req, res) => {
-  res.sendFile(path.join(adminDistPath, "index.html"));
+// Handle React Router deep links for the admin panel
+// This ensures that navigating to /tan-backend/admin/login or other sub-routes directly works
+app.get("/tan-backend/admin*", (req, res) => {
+  res.sendFile(path.join(adminDistPath, "index.html"), (err) => {
+    if (err) {
+      logger.error("Error sending index.html for admin: %o", err);
+      res.status(404).send("Admin Panel build not found. Please ensure tan-admin/dist exists.");
+    }
+  });
 });
 
 // Error Handling Middleware
