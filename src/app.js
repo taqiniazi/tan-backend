@@ -51,14 +51,14 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Routes
 app.use("/api", require("./routes"));
-app.use("/tan_network/api", require("./routes"));
+app.use("/tan-backend/api", require("./routes"));
 
 // Admin Dashboard static files
 const adminDistPath = path.join(__dirname, "../../tan-admin/dist");
-app.use("/tan_network/admin", express.static(adminDistPath));
+app.use("/tan-backend/admin", express.static(adminDistPath));
 
-// Handle both /tan_network/admin and /tan_network/admin/*
-app.get(["/tan_network/admin", "/tan_network/admin/*"], (req, res) => {
+// Handle both /tan-backend/admin and /tan-backend/admin/*
+app.get(["/tan-backend/admin", "/tan-backend/admin/*"], (req, res) => {
   res.sendFile(path.join(adminDistPath, "index.html"));
 });
 
