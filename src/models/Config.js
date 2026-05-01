@@ -8,7 +8,9 @@ const configSchema = new mongoose.Schema({
   maintenanceMode: { type: Boolean, default: false },
   paymentAddressEVM: String,
   paymentAddressSOL: String,
-  premiumFee: { type: Number, default: 10.0 }
+  premiumFee: { type: Number, default: 10.0 },
+  minAppVersion: { type: String, default: "1.0.0" },
+  appUpdateUrl: { type: String, default: "https://tannetwork.online" }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Config", configSchema);
