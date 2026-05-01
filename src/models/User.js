@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   password: String,
   country: String,
   city: String,
+  profileImage: String,
 
   balance: { type: Number, default: 0 },
   baseBalance: { type: Number, default: 0 },
