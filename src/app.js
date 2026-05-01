@@ -17,6 +17,7 @@ app.use(helmet()); // Security headers
 app.use(morgan("combined", { stream: { write: (message) => logger.info(message.trim()) } })); // HTTP logging
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
+app.use("/tan_network/uploads", express.static("uploads"));
 app.use(cors({
   origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
