@@ -15,6 +15,7 @@ const profileCtrl = require("../controllers/profileController");
 const transactionCtrl = require("../controllers/transactionController");
 const configCtrl = require("../controllers/configController");
 const referralCtrl = require("../controllers/referralController");
+const leaderboardCtrl = require("../controllers/leaderboardController");
 const paymentRoutes = require("./paymentRoutes");
 
 const upload = require("../middleware/upload");
@@ -27,6 +28,7 @@ router.post("/update-profile-image", auth, upload.single("image"), profileCtrl.u
 router.get("/referrals", auth, referralCtrl.getReferrals);
 router.get("/activity", auth, transactionCtrl.getTransactions);
 router.get("/referral-stats", auth, authCtrl.getReferralStats);
+router.get("/leaderboard", auth, leaderboardCtrl.getLeaderboard);
 
 router.post("/start-mining", auth, miningCtrl.startMining);
 router.post("/claim-reward", auth, miningCtrl.claimReward);
@@ -51,5 +53,6 @@ router.post("/admin/withdraw/approve", auth, admin, adminCtrl.approve);
 router.post("/admin/withdraw/reject", auth, admin, adminCtrl.reject);
 router.post("/admin/config/update", auth, admin, configCtrl.updateConfig);
 router.post("/admin/user/toggle-flag", auth, admin, adminCtrl.toggleFlagUser);
+router.post("/admin/user/toggle-role", auth, admin, adminCtrl.toggleAdminRole);
 
 module.exports = router;
