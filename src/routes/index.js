@@ -54,5 +54,6 @@ router.post("/admin/withdraw/reject", auth, admin, adminCtrl.reject);
 router.post("/admin/config/update", auth, admin, configCtrl.updateConfig);
 router.post("/admin/user/toggle-flag", auth, admin, adminCtrl.toggleFlagUser);
 router.post("/admin/user/toggle-role", auth, admin, adminCtrl.toggleAdminRole);
+router.post("/admin/user/delete", auth, admin, adminCtrl.deleteUser);
 
 module.exports = router;
