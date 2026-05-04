@@ -38,11 +38,11 @@ mongoose.connect(process.env.MONGO_URI)
       if (!adminExists) {
         const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
         await User.create({
-          name: "Super Admin",
+          name: "Tan Network",
           email: process.env.ADMIN_EMAIL,
           password: hashedPassword,
           role: "admin",
-          referralCode: "SUPERADMIN"
+          referralCode: "1f91b1"
         });
         logger.info("Default admin user created");
       }
