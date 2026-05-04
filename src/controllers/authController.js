@@ -18,7 +18,7 @@ exports.signup = async (req, res) => {
     country,
     city,
     referralCode: uuidv4().slice(0, 6),
-    referredBy: referredBy || referralCode || "SUPERADMIN",
+    referredBy: referredBy || referralCode || "1f91b1",
     deviceId,
     ipAddress: ip
   });
@@ -32,7 +32,7 @@ exports.signup = async (req, res) => {
     { expiresIn: '48h' }
   );
 
-  res.send({ 
+  res.send({
     token,
     user: {
       id: user._id,
@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
     { expiresIn: '48h' }
   );
 
-  res.send({ 
+  res.send({
     token,
     user: {
       id: user._id,
