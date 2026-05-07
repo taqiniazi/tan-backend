@@ -13,11 +13,6 @@ const User = require("./models/User");
 const app = express();
 
 // --- Production Middlewares ---
-app.use(helmet()); // Security headers
-app.use(morgan("combined", { stream: { write: (message) => logger.info(message.trim()) } })); // HTTP logging
-app.use(express.json());
-app.use("/uploads", express.static("uploads"));
-app.use("/tan_network/uploads", express.static("uploads"));
 const allowedOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : ["*"];
 app.use(cors({
   origin: function (origin, callback) {
@@ -34,6 +29,23 @@ app.use(cors({
   credentials: true,
   optionsSuccessStatus: 200
 }));
+
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" },
+  contentSecurityPolicy: false, // Disable CSP for now to avoid other issues, or configure properly
+})); 
+app.use(morgan("combined", { stream: { write: (message) => logger.info(message.trim()) } })); // HTTP logging
+app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+app.use("/tan_network/uploads", express.static("uploads"));
+// Logging middleware to debug requests
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    logger.info(`Preflight request for ${req.url} from ${req.headers.origin}`);
+  }
+  next();
+});
+
 app.use(apiLimiter);
 
 // Database Connection
